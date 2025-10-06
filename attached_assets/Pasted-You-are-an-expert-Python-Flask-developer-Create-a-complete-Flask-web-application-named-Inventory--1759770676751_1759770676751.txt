@@ -1,0 +1,65 @@
+You are an expert Python Flask developer.
+
+Create a complete Flask web application named “Inventory Management System” based on the following specifications:
+
+*Project Goal:*
+Build a Flask-based web app to manage an inventory of products across multiple warehouse locations.
+
+*Requirements:*
+1. *Database Tables:*
+   - Product (product_id, product_name, description)
+   - Location (location_id, location_name)
+   - ProductMovement (movement_id, timestamp, from_location, to_location, product_id, qty)
+
+   Notes:
+   - Primary keys can be text or integer.
+   - Either from_location or to_location can be empty.
+     - If moving INTO a location → from_location is blank.
+     - If moving OUT of a location → to_location is blank.
+
+2. *Views / Routes:*
+   - /products: Add, Edit, View Products
+   - /locations: Add, Edit, View Locations
+   - /movements: Add, Edit, View Product Movements
+   - /report: Display balance quantity in each location (columns: Product, Warehouse, Qty)
+
+3. *Functionality:*
+   - Create 3–4 products and 3–4 locations for testing.
+   - Record multiple movements between locations.
+   - Automatically update stock levels.
+   - Show stock summary grid view.
+
+4. *Tech Stack:*
+   - Flask (with Blueprints preferred)
+   - SQLAlchemy ORM (or raw SQL allowed)
+   - SQLite or MySQL database
+   - Bootstrap 5 for clean UI
+   - Jinja2 templates for frontend
+   - Include static folder for CSS and JS
+
+5. *Deliverables:*
+   - Full Flask project structure:
+     
+     /inventory_app
+        /templates
+        /static
+        app.py
+        models.py
+        routes.py
+        forms.py
+        database.db (or schema.sql)
+     
+   - CRUD operations for all entities.
+   - README.md with setup instructions, screenshots, and usage guide.
+
+6. *Extra (Optional but Recommended):*
+   - Use Flask-WTF for forms.
+   - Add search/filter to reports.
+   - Add total inventory count per product.
+
+Please generate production-ready code with:
+- Comments explaining each part
+- Bootstrap-styled HTML templates
+- A sample dataset for testing
+
+Output the full project code, including templates, routes, and models.
