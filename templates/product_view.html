@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}View Product - Inventory Management{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="bi bi-box-seam"></i> Product Details</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Product ID:</dt>
+                    <dd class="col-sm-9"><strong>{{ product.product_id }}</strong></dd>
+                    
+                    <dt class="col-sm-3">Product Name:</dt>
+                    <dd class="col-sm-9">{{ product.product_name }}</dd>
+                    
+                    <dt class="col-sm-3">Description:</dt>
+                    <dd class="col-sm-9">{{ product.description or '-' }}</dd>
+                </dl>
+                
+                <hr>
+                
+                <div class="d-flex justify-content-between">
+                    <a href="{{ url_for('products') }}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                    <div>
+                        <a href="{{ url_for('edit_product', product_id=product.product_id) }}" 
+                           class="btn btn-warning">
+                            <i class="bi bi-pencil"></i> Edit
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Product Movements - Inventory Management{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-arrow-left-right"></i> Product Movements</h2>
+    <a href="{{ url_for('add_movement') }}" class="btn btn-warning">
+        <i class="bi bi-plus-circle"></i> Add New Movement
+    </a>
+</div>
+
+{% if movements %}
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Timestamp</th>
+                        <th>Product</th>
+                        <th>From Location</th>
+                        <th>To Location</th>
+                        <th>Quantity</th>
+                        <th>Type</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for movement in movements %}
+                    <tr>
+                        <td>{{ movement.movement_id }}</td>
+                        <td>{{ movement.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>
+                            <strong>{{ movement.product.product_id }}</strong><br>
+                            <small>{{ movement.product.product_name }}</small>
+                        </td>
+                        <td>
+                            {% if movement.from_location %}
+                                {{ movement.from_loc.location_id }}<br>
+                                <small>{{ movement.from_loc.location_name }}</small>
+                            {% else %}
+                                <span class="text-muted">-</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if movement.to_location %}
+                                {{ movement.to_loc.location_id }}<br>
+                                <small>{{ movement.to_loc.location_name }}</small>
+                            {% else %}
+                                <span class="text-muted">-</span>
+                            {% endif %}
+                        </td>
+                        <td><strong>{{ movement.qty }}</strong></td>
+                        <td>
+                            {% if movement.get_movement_type() == 'IN' %}
+                                <span class="badge bg-success">IN</span>
+                            {% elif movement.get_movement_type() == 'OUT' %}
+                                <span class="badge bg-danger">OUT</span>
+                            {% else %}
+                                <span class="badge bg-info">Transfer</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('view_movement', movement_id=movement.movement_id) }}" 
+                               class="btn btn-sm btn-info">
+                                <i class="bi bi-eye"></i> View
+                            </a>
+                            <a href="{{ url_for('edit_movement', movement_id=movement.movement_id) }}" 
+                               class="btn btn-sm btn-warning">
+                                <i class="bi bi-pencil"></i> Edit
+                            </a>
+                            <button type="button" class="btn btn-sm btn-danger" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#deleteModal{{ loop.index }}">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+                            
+                            <div class="modal fade" id="deleteModal{{ loop.index }}" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Confirm Delete</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure you want to delete this movement record?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <form method="POST" action="{{ url_for('delete_movement', movement_id=movement.movement_id) }}" style="display: inline;">
+                                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-info">
+    <i class="bi bi-info-circle"></i> No movements recorded yet. Click "Add New Movement" to get started.
+</div>
+{% endif %}
+{% endblock %}

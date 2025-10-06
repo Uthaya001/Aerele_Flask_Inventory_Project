@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}View Movement - Inventory Management{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0"><i class="bi bi-arrow-left-right"></i> Movement Details</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Movement ID:</dt>
+                    <dd class="col-sm-9"><strong>{{ movement.movement_id }}</strong></dd>
+                    
+                    <dt class="col-sm-3">Timestamp:</dt>
+                    <dd class="col-sm-9">{{ movement.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</dd>
+                    
+                    <dt class="col-sm-3">Product:</dt>
+                    <dd class="col-sm-9">
+                        <strong>{{ movement.product.product_id }}</strong> - {{ movement.product.product_name }}
+                    </dd>
+                    
+                    <dt class="col-sm-3">From Location:</dt>
+                    <dd class="col-sm-9">
+                        {% if movement.from_location %}
+                            <strong>{{ movement.from_loc.location_id }}</strong> - {{ movement.from_loc.location_name }}
+                        {% else %}
+                            <span class="text-muted">N/A</span>
+                        {% endif %}
+                    </dd>
+                    
+                    <dt class="col-sm-3">To Location:</dt>
+                    <dd class="col-sm-9">
+                        {% if movement.to_location %}
+                            <strong>{{ movement.to_loc.location_id }}</strong> - {{ movement.to_loc.location_name }}
+                        {% else %}
+                            <span class="text-muted">N/A</span>
+                        {% endif %}
+                    </dd>
+                    
+                    <dt class="col-sm-3">Quantity:</dt>
+                    <dd class="col-sm-9"><strong>{{ movement.qty }}</strong></dd>
+                    
+                    <dt class="col-sm-3">Movement Type:</dt>
+                    <dd class="col-sm-9">
+                        {% if movement.get_movement_type() == 'IN' %}
+                            <span class="badge bg-success">IN</span>
+                        {% elif movement.get_movement_type() == 'OUT' %}
+                            <span class="badge bg-danger">OUT</span>
+                        {% else %}
+                            <span class="badge bg-info">Transfer</span>
+                        {% endif %}
+                    </dd>
+                </dl>
+                
+                <hr>
+                
+                <div class="d-flex justify-content-between">
+                    <a href="{{ url_for('movements') }}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                    <div>
+                        <a href="{{ url_for('edit_movement', movement_id=movement.movement_id) }}" 
+                           class="btn btn-warning">
+                            <i class="bi bi-pencil"></i> Edit
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

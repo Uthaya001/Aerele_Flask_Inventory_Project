@@ -1,0 +1,48 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+}
+
+footer {
+    margin-top: auto;
+}
+
+.jumbotron {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.card {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.table th {
+    font-weight: 600;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.btn {
+    border-radius: 5px;
+}
+
+.alert {
+    border-radius: 5px;
+}
+
+.modal-header {
+    border-bottom: 2px solid #dee2e6;
+}
+
+.badge {
+    padding: 0.5em 0.75em;
+}
